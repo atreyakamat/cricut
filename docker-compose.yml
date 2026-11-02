@@ -1,0 +1,13 @@
+# Cricut sheet maker as an always-on container: tiny, no dependencies, so it is
+# up in about a second whatever the other services are doing.
+#   docker compose up -d --build   ->   http://<server>:8300
+services:
+  cricut:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8300:80"
+    environment:
+      # Addresses allowed to show this app inside a window (the control room).
+      FRAME_ANCESTORS: "'self' ${CONTROL_ROOM_ORIGIN:-http://localhost:3000}"
+    mem_limit: 64m

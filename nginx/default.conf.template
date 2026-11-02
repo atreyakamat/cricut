@@ -1,0 +1,28 @@
+server {
+  listen 80;
+  server_name _;
+  root /usr/share/nginx/html;
+  index index.html;
+
+  # For the control room's window and for Docker/Uptime Kuma health checks.
+  location = /health {
+    default_type application/json;
+    return 200 '{"ok":true,"service":"cricut"}';
+  }
+
+  # Allow the control room to show this app in a window. FRAME_ANCESTORS lists
+  # the addresses that may do so, e.g. "'self' http://houseofstix.lan".
+  add_header Content-Security-Policy "frame-ancestors ${FRAME_ANCESTORS}" always;
+  add_header X-Content-Type-Options "nosniff" always;
+
+  location / {
+    try_files $uri $uri.html $uri/ =404;
+  }
+
+  # Built files carry a content hash, so they can be cached for good.
+  location /_next/static/ {
+    expires 1y;
+    add_header Cache-Control "public, immutable";
+    add_header Content-Security-Policy "frame-ancestors ${FRAME_ANCESTORS}" always;
+  }
+}
