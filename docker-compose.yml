@@ -9,5 +9,7 @@ services:
       - "8300:80"
     environment:
       # Addresses allowed to show this app inside a window (the control room).
-      FRAME_ANCESTORS: "'self' ${CONTROL_ROOM_ORIGIN:-http://localhost:3000}"
+      FRAME_ANCESTORS: "'self' ${CONTROL_ROOM_ORIGIN:-http://localhost:8200}"
     mem_limit: 64m
+    security_opt:
+      - no-new-privileges:true
