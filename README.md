@@ -1,5 +1,7 @@
 # cricut
 
+> The same sheet maker now also lives inside [CutDesk](https://github.com/atreyakamat/cutdesk) at `/sheets`. This repo stays as the tiny offline nginx version.
+
 Pack outlined stickers onto Cricut **A4 Print Then Cut** sheets. Runs entirely in the browser, so it works offline (for example at a stall with no signal) and nothing is uploaded anywhere.
 
 Ported from the shop admin's `/admin/sheets` page in [`stixnvibes-nv`](https://github.com/atreyakamat/stixnvibes-nv), without the shop login, database or product picker.
@@ -26,7 +28,7 @@ docker compose up -d --build     # http://<server>:8300
 
 - nginx serves the static build; the image is a few MB and uses well under 64 MB of memory.
 - `GET /health` returns `{"ok":true,"service":"cricut"}` for Docker and Uptime Kuma.
-- To open it inside the House of Stix control room, set `CONTROL_ROOM_ORIGIN` to the control room's address (default `http://localhost:3000`). This sets the `frame-ancestors` header so the browser allows the window.
+- To open it inside the House of Stix control room, set `CONTROL_ROOM_ORIGIN` to the control room's address (default `http://localhost:8200`, the control room's port). This sets the `frame-ancestors` header so the browser allows the window.
 
 ## Layout
 
